@@ -47,6 +47,26 @@ extends RichOutputFormat<Tuple5<Integer, Integer, Integer, String, Integer>> {
 		}
 	}
 	
+	public static void statistics()  {
+		try {
+			Class.forName("org.neo4j.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			Connection con = DriverManager.getConnection("jdbc:neo4j://database:7474/");
+			
+			Statement stmt = con.createStatement();
+			stmt.execute("MATCH (n) DETACH DELETE n");
+			stmt.execute("CREATE (Root:Root { name: 'Root' })");
+			stmt.close();
+			con.close();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public void close() throws IOException {
 		try {

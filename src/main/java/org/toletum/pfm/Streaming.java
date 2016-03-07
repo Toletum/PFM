@@ -24,6 +24,8 @@ public class Streaming {
 		Jedis jedis = new Jedis(Config.RedisServer);
 		jedis.del(Config.RedisCrimes);
 		jedis.close();
+		
+		sinkFunctionStatistics.CleanDB();
 
 		
 		Properties properties = new Properties();
@@ -42,7 +44,9 @@ public class Streaming {
 		.keyBy(1);
 		
 		Crimes.addSink(new sinkFunction());
+		Crimes.addSink(new sinkFunctionStatistics());
 		
+	
 	    properties.put("topic", Config.KafkaTopicClock);
 		DataStream<String> messageStreamClock = this.env.addSource(new FlinkKafkaConsumer082<>(properties.getProperty("topic"), new SimpleStringSchema(), properties));
 		messageStreamClock

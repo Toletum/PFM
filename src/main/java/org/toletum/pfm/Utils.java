@@ -26,11 +26,43 @@ public class Utils {
 		return month;
 	}
 	
+	public static Integer getMonth2(String f){
+		Integer month;
+		
+		try {
+			SimpleDateFormat format1=new SimpleDateFormat("yyyy-MM-dd");
+			Date dt1=format1.parse(f);
+			DateFormat format2=new SimpleDateFormat("MM"); 
+			month=Integer.valueOf(format2.format(dt1));
+		} catch(Exception ex) {
+			month = new Integer(-1);
+		}
+		
+		
+		return month;
+	}
+	
 	public static Integer getDayOfWeek(String f){
 		Integer dayOfWeek;
 		
 		try {
 			SimpleDateFormat format1=new SimpleDateFormat("MM/dd/yyyy");
+			Date dt1=format1.parse(f);
+			DateFormat format2=new SimpleDateFormat("u"); 
+			dayOfWeek=Integer.valueOf(format2.format(dt1));
+		} catch(Exception ex) {
+			dayOfWeek = new Integer(-1);
+		}
+		
+		
+		return dayOfWeek;
+	}
+	
+	public static Integer getDayOfWeek2(String f){
+		Integer dayOfWeek;
+		
+		try {
+			SimpleDateFormat format1=new SimpleDateFormat("yyyy-MM-dd");
 			Date dt1=format1.parse(f);
 			DateFormat format2=new SimpleDateFormat("u"); 
 			dayOfWeek=Integer.valueOf(format2.format(dt1));

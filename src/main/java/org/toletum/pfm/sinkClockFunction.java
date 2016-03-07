@@ -18,11 +18,8 @@ implements SinkFunction<String> {
 
 	@Override
 	public void invoke(String fechaHora) throws Exception {
-		System.out.println(fechaHora);
     	jedis = new Jedis(Config.RedisServer);
-		
     	jedis.set(Config.RedisClock, fechaHora);
-    	
     	jedis.close();
 	}
 }

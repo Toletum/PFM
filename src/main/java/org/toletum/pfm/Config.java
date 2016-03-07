@@ -11,4 +11,5 @@ public interface Config {
 	public static final String RedisServer = "database";
 	public static final String RedisCrimes = "Crimes";
 	public static final String RedisClock = "Clock";
+	public static final Integer RedisCrimesSize = new Integer(10);
 }
