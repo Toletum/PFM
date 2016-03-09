@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -43,7 +42,7 @@ public class sinkFunctionStatistics
 	
 	@Override
 	public void invoke(Tuple7<String, String, String, String, String, String, String> crime) throws Exception {
-		Batch.log("invoke");
+		Batch.log("invoke  ");
 		
 		Integer month = Utils.getMonth2(crime.f2);
 		Integer dayOfWeek = Utils.getDayOfWeek2(crime.f2);
