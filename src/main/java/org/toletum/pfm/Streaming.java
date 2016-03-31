@@ -13,7 +13,6 @@ import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 import redis.clients.jedis.Jedis;
 
 
-
 public class Streaming {
 	private StreamExecutionEnvironment env;
 	
