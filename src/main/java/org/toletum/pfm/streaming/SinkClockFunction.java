@@ -1,14 +1,15 @@
-package org.toletum.pfm;
+package org.toletum.pfm.streaming;
 
 import org.apache.flink.streaming.api.functions.sink.SinkFunction;
+import org.toletum.pfm.Config;
 
 import redis.clients.jedis.Jedis;
 
-public class sinkClockFunction 
+public class SinkClockFunction 
 implements SinkFunction<String> {
     private Jedis jedis;
 	
-	public sinkClockFunction() {
+	public SinkClockFunction() {
 	}
 
 	/**

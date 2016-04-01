@@ -1,4 +1,4 @@
-package org.toletum.pfm;
+package org.toletum.pfm.streaming;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -10,9 +10,11 @@ import java.sql.Statement;
 import org.apache.flink.api.java.tuple.Tuple7;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
+import org.toletum.pfm.Utils;
+import org.toletum.pfm.batch.Batch;
 
 
-public class sinkFunctionStatistics 
+public class SinkFunctionStatistics 
 	extends RichSinkFunction<Tuple7<String, String, String, String, String, String,String>> {
 	
 	private transient Connection con=null;

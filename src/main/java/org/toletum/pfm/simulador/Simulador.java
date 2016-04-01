@@ -24,7 +24,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 
 import org.toletum.pfm.Utils;
 
-public class SimuladorII {
+public class Simulador {
 	private TreeMap<String, LinkedList<String>> delitos = new TreeMap<String, LinkedList<String>>();
 
 	private String str="";
@@ -48,7 +48,7 @@ public class SimuladorII {
 		this.iSleep = iSleep;
 	}
 	
-	public SimuladorII() {
+	public Simulador() {
 		delitos.clear();
 	}
 	
@@ -150,7 +150,7 @@ public class SimuladorII {
 	}
 	
 	public static void main(String[] args) throws InterruptedException, ParseException, IOException {
-		SimuladorII sim = new SimuladorII();
+		Simulador sim = new Simulador();
 		
 		if(args.length==1) {
 			sim.setiSleep(Integer.parseInt(args[0]));

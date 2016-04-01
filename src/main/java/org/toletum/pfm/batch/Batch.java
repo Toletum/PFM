@@ -1,10 +1,11 @@
-package org.toletum.pfm;
+package org.toletum.pfm.batch;
 
 
 import org.apache.flink.api.java.DataSet;
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.api.java.tuple.Tuple12;
 import org.apache.flink.api.java.tuple.Tuple5;
+import org.toletum.pfm.CrimeMap;
 
 public class Batch {
 	final String CSV = "hdfs://hadoop:9000/BDP_History/Victim_Based_Crime.csv";
@@ -43,7 +44,7 @@ public class Batch {
 								  String.class, String.class, String.class, 
 								  String.class, String.class, String.class);
 	
-		this.DataCrimes = this.inputCSV.map(new CrimeSplitter());
+		this.DataCrimes = this.inputCSV.map(new CrimeMap());
 	}
 
 	

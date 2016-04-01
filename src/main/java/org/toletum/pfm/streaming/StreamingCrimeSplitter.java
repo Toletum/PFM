@@ -1,4 +1,4 @@
-package org.toletum.pfm;
+package org.toletum.pfm.streaming;
 
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.tuple.Tuple7;

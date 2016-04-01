@@ -1,4 +1,4 @@
-package org.toletum.pfm;
+package org.toletum.pfm.batch;
 
 import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.java.tuple.Tuple5;

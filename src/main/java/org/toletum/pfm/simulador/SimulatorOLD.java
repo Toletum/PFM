@@ -1,4 +1,4 @@
-package org.toletum.pfm;
+package org.toletum.pfm.simulador;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,7 +21,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
-public class Simulator {
+public class SimulatorOLD {
 	private Connection connection;
 	private Statement st;
 	
@@ -35,7 +35,7 @@ public class Simulator {
 	
 	Producer<String, String> producer;
 	
-	public Simulator() {
+	public SimulatorOLD() {
 		try {
 			Class.forName("org.apache.drill.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -158,7 +158,7 @@ public class Simulator {
 
 	public void startSimulation() throws InterruptedException {
 		
-		Thread slc = new Thread(new Simulator.LeeConfig(this));
+		Thread slc = new Thread(new SimulatorOLD.LeeConfig(this));
         slc.start();
 
         
@@ -173,7 +173,7 @@ public class Simulator {
 	
 
 	public static void main(String[] args) throws InterruptedException, ParseException {
-		Simulator sim = new Simulator();
+		SimulatorOLD sim = new SimulatorOLD();
 		
 		sim.getIni();
 		System.out.println(sim);
@@ -185,11 +185,11 @@ public class Simulator {
 	}
 	
 	private class LeeConfig implements Runnable {
-		private Simulator parent;
+		private SimulatorOLD parent;
 		
 	    private KafkaConsumer<String, String> consumer;
 	    
-	    public LeeConfig(Simulator parent) {
+	    public LeeConfig(SimulatorOLD parent) {
 	    	this.parent = parent;
 	    }
 

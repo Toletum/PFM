@@ -4,7 +4,7 @@ import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.tuple.Tuple12;
 import org.apache.flink.api.java.tuple.Tuple5;
 
-public class CrimeSplitter implements MapFunction<Tuple12<String,String,String,
+public class CrimeMap implements MapFunction<Tuple12<String,String,String,
 String,String,String,
 String,String,String,
 String,String,String>, 

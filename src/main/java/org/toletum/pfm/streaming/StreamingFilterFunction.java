@@ -1,9 +1,9 @@
-package org.toletum.pfm;
+package org.toletum.pfm.streaming;
 
 import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.java.tuple.Tuple7;
 
-public class filterFunction 
+public class StreamingFilterFunction 
 implements FilterFunction<Tuple7<String, String, String, String, String, String,String>> {
 
 	/**
