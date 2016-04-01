@@ -7,7 +7,7 @@ import java.util.Date;
 public class Utils {
 	public static String clearNumber(String numero) {
 		
-		return numero.replaceAll("[^0-9.]", "");
+		return numero.replaceAll("[^0-9.-]", "");
 	}
 	
 	public static Integer getMonth(String f){

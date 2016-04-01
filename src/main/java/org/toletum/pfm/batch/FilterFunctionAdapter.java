@@ -5,7 +5,7 @@ import org.apache.flink.api.java.tuple.Tuple5;
 
 public class FilterFunctionAdapter 
        implements FilterFunction<Tuple5<Integer, Integer, Integer, String, Integer>> {
-	private final String Barrios[] = { "CENTRAL",
+	public static final String Barrios[] = { "CENTRAL",
 								       "EASTERN",
 								       "NORTHEASTERN",
 								       "NORTHERN",

@@ -1,8 +1,9 @@
-package org.toletum.pfm;
+package org.toletum.pfm.batch;
 
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.tuple.Tuple12;
 import org.apache.flink.api.java.tuple.Tuple5;
+import org.toletum.pfm.Utils;
 
 public class CrimeMap implements MapFunction<Tuple12<String,String,String,
 String,String,String,
