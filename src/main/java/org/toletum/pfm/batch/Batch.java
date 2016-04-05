@@ -62,7 +62,6 @@ public class Batch {
 		b.processCrime();
 		
 		env.execute("PFM Batch Layer");
-
 	}
 	
 

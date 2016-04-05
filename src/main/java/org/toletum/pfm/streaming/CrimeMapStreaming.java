@@ -1,12 +1,12 @@
 package org.toletum.pfm.streaming;
 
 import org.apache.flink.api.common.functions.MapFunction;
-import org.apache.flink.api.java.tuple.Tuple8;
+import org.apache.flink.api.java.tuple.Tuple9;
 import org.toletum.pfm.Utils;
 
 public class CrimeMapStreaming 
 	  implements MapFunction<String, 
-	  Tuple8<String,Integer,Integer,
+	  Tuple9<Integer,String,Integer,Integer,
 	         Integer,String,Integer,
 	         String,String>
       > {
@@ -15,16 +15,20 @@ public class CrimeMapStreaming
 		 * 
 		 */
 		private static final long serialVersionUID = -9139495496732679596L;
+		
+		private int contador=0;
 
 		@Override
-		public 	  Tuple8<String,Integer,Integer,
+		public 	  Tuple9<Integer,String,Integer,Integer,
         Integer,String,Integer,
         String,String> map(String value) throws Exception {
 			String []values = value.split(",");
 			
-			Tuple8<String,Integer,Integer,
+			Tuple9<Integer,String,Integer,Integer,
 			Integer,String,Integer,
 			String,String> t;
+			
+			contador++;
 			
 			try {
 				
@@ -44,17 +48,17 @@ public class CrimeMapStreaming
 				Lat = Utils.clearNumber(values[9]);
 				Lng = Utils.clearNumber(values[10]);
 				
-				t = new Tuple8<String,Integer,Integer,
+				t = new Tuple9<Integer,String,Integer,Integer,
 						Integer,String,Integer,
-						String,String>(value, Mes, Minutes,
+						String,String>(new Integer(contador), value, Mes, Minutes,
 								       dayOfWeek, Barrio, Num,
 								       Lat, Lng);
 				
 			} catch(Exception ex) {
 				
-				t = new Tuple8<String,Integer,Integer,
+				t = new Tuple9<Integer, String,Integer,Integer,
 						Integer,String,Integer,
-						String,String>(value,null,null,
+						String,String>(new Integer(contador), value,null,null,
 								              null,null,null,
 								              null,null);
 			}

@@ -2,9 +2,9 @@ package org.toletum.pfm.streaming;
 
 import java.util.Properties;
 
-import org.apache.flink.api.java.tuple.Tuple;
+import org.apache.flink.api.java.tuple.Tuple9;
 import org.apache.flink.streaming.api.datastream.DataStream;
-import org.apache.flink.streaming.api.datastream.KeyedStream;
+import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer082;
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
@@ -20,13 +20,11 @@ public class Streaming {
 	public Streaming(StreamExecutionEnvironment env) {
 		this.env = env;
 		
-		/*
 		Jedis jedis = new Jedis(Config.RedisServer);
 		jedis.del(Config.RedisCrimes);
 		jedis.close();
 		
-		sinkFunctionStatistics.CleanDB();
-		*/
+		SinkFunctionCrimeStadistics.CleanDB();
 
 		
 		Properties properties = new Properties();
@@ -36,31 +34,22 @@ public class Streaming {
 	    properties.put("topic", Config.KafkaTopicCrime);
 	    //properties.put("auto.offset.reset", "latest");
 	    properties.put("auto.offset.reset", "earliest");
-		
+
 		DataStream<String> messageStream = this.env.addSource(new FlinkKafkaConsumer082<>(properties.getProperty("topic"), new SimpleStringSchema(), properties));
 		
-		messageStream
-		.keyBy(1)
-		.map(new CrimeMapStreaming())
-		.filter(new StreamingFilterFunction())
-		.keyBy(4)
-		.print();
-		
-
-/*		
-		KeyedStream<Tuple7<String, String, String, String, String, String, String>, Tuple> Crimes = messageStream.map(new StreamingCrimeSplitter ())
-		.filter(new StreamingFilterFunction())
-		.keyBy(4)
-		;
-		Crimes.addSink(new sinkFunction());
-		Crimes.addSink(new sinkFunctionStatistics());
-		
 	
+		SingleOutputStreamOperator<Tuple9<Integer, String, Integer, Integer, Integer, String, Integer, String, String>> Crimes = messageStream
+		.map(new CrimeMapStreaming())
+		.keyBy(4)
+		.filter(new StreamingFilterFunction());
+		
+		Crimes.addSink(new SinkFunctionCrime()); // Posición GPS de delitos
+		Crimes.addSink(new SinkFunctionCrimeStadistics()); // Actualización
+		
 	    properties.put("topic", Config.KafkaTopicClock);
 		DataStream<String> messageStreamClock = this.env.addSource(new FlinkKafkaConsumer082<>(properties.getProperty("topic"), new SimpleStringSchema(), properties));
 		messageStreamClock
-		.addSink(new sinkClockFunction());
-		*/
+		.addSink(new SinkClockFunction());
 	}
 
 	public static void main(String[] args) throws Exception {
