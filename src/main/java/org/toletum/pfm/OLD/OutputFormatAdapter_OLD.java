@@ -1,4 +1,4 @@
-package org.toletum.pfm.batch;
+package org.toletum.pfm.OLD;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import org.apache.flink.api.common.io.RichOutputFormat;
 import org.apache.flink.api.java.tuple.Tuple5;
 import org.apache.flink.configuration.Configuration;
 
-public class OutputFormatAdapter  
+public class OutputFormatAdapter_OLD  
 extends RichOutputFormat<Tuple5<Integer, Integer, Integer, String, Integer>> {
 
 	private PreparedStatement stmt;

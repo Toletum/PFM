@@ -10,7 +10,6 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer082;
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 
 import org.toletum.pfm.Config;
-import org.toletum.pfm.batch.CrimeMap;
 
 import redis.clients.jedis.Jedis;
 
@@ -40,7 +39,9 @@ public class Streaming {
 		
 		DataStream<String> messageStream = this.env.addSource(new FlinkKafkaConsumer082<>(properties.getProperty("topic"), new SimpleStringSchema(), properties));
 		
-		messageStream.map(new CrimeMapStreaming())
+		messageStream
+		.keyBy(1)
+		.map(new CrimeMapStreaming())
 		.filter(new StreamingFilterFunction())
 		.keyBy(4)
 		.print();

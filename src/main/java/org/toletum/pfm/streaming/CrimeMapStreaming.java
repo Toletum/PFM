@@ -46,7 +46,7 @@ public class CrimeMapStreaming
 				
 				t = new Tuple8<String,Integer,Integer,
 						Integer,String,Integer,
-						String,String>("OK", Mes, Minutes,
+						String,String>(value, Mes, Minutes,
 								       dayOfWeek, Barrio, Num,
 								       Lat, Lng);
 				
@@ -54,7 +54,7 @@ public class CrimeMapStreaming
 				
 				t = new Tuple8<String,Integer,Integer,
 						Integer,String,Integer,
-						String,String>("ERROR",null,null,
+						String,String>(value,null,null,
 								              null,null,null,
 								              null,null);
 			}

@@ -3,6 +3,7 @@ package org.toletum.pfm.batch;
 
 import org.apache.flink.api.java.DataSet;
 import org.apache.flink.api.java.ExecutionEnvironment;
+import org.apache.flink.api.java.operators.FilterOperator;
 import org.apache.flink.api.java.tuple.Tuple12;
 import org.apache.flink.api.java.tuple.Tuple5;
 
@@ -23,17 +24,23 @@ public class Batch {
 	}
 	
 	public void processCrime() throws Exception {
-		this.DataCrimes
+		
+		FilterOperator<Tuple5<Integer, Integer, Integer, String, Integer>> DataCrimesF = this.DataCrimes
+        .filter(new FilterFunctionAdapter());
+        
+		DataCrimesF.partitionByHash(0).distinct(0).output(new OutputFormatNode("meses.csv","Mes",0,0));
+		DataCrimesF.partitionByHash(3).distinct(3).output(new OutputFormatNode("barrios.csv","Barrio",3,3));
+		DataCrimesF.partitionByHash(0,2).distinct(0,2).output(new OutputFormatNode("dias.csv","Dia",2,0,2));
+		DataCrimesF.partitionByHash(0,2).distinct(0,2).output(new OutputFormatMesesDias("mesesdias.csv"));
+
+		DataCrimesF
         .groupBy(0,1,2,3)
         .sum(4)
-        .filter(new FilterFunctionAdapter())
-        .output(new OutputFormatAdapter());
+        .output(new OutputFormatDelitos("delitos.csv"));
 	}
 	
 	public Batch(ExecutionEnvironment env) throws Exception {
 		this.env = env;
-		
-		OutputFormatAdapter.CleanDB();
 		
 		this.inputCSV = env.readCsvFile(this.CSV)
 						   .ignoreInvalidLines()
@@ -55,7 +62,7 @@ public class Batch {
 		b.processCrime();
 		
 		env.execute("PFM Batch Layer");
-		
+
 	}
 	
 
