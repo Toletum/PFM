@@ -17,6 +17,6 @@ String,String>> {
 	public boolean filter(Tuple9<Integer,String,Integer,Integer,
 			Integer,String,Integer,
 			String,String> crime) throws Exception {
-		return crime.f2!=null;
+		return crime.f2!=null && crime.f2>0;
 	}
 }

@@ -58,9 +58,9 @@ public class CrimeMapStreaming
 				
 				t = new Tuple9<Integer, String,Integer,Integer,
 						Integer,String,Integer,
-						String,String>(new Integer(contador), value,null,null,
-								              null,null,null,
-								              null,null);
+						String,String>(new Integer(contador), value, new Integer(-1), new Integer(-1),
+									   new Integer(-1),"",new Integer(-1),
+								       "","");
 			}
 			
 			return t;

@@ -22,10 +22,10 @@ public class SinkFunctionCrime
 
 	@Override
 	public void invoke(Tuple9<Integer,String, Integer, Integer, Integer, String, Integer, String, String> crime) throws Exception {
-		jedis.lpush(Config.RedisCrimes, crime.f0+";"+crime.f7+";"+crime.f8);
+		jedis.lpush(Config.RedisCrimes, crime.f0+";"+crime.f7+";"+crime.f8+";"+crime.f5);
 		jedis.ltrim(Config.RedisCrimes, 0, Config.RedisCrimesSize);
 		
-		System.out.println(crime.f0+";"+crime.f7+";"+crime.f8);
+		System.out.println(crime.f0+";"+crime.f7+";"+crime.f8+";"+crime.f5);
 	}
 
 	

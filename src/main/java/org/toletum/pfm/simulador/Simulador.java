@@ -98,7 +98,10 @@ public class Simulador {
 	}
 	
 	private void run() throws ParseException, InterruptedException {
-		String diaIni=delitos.firstKey();
+		run(delitos.firstKey());
+	}
+	
+	private void run(String diaIni) throws ParseException, InterruptedException {
 		String crimeDate;
 		String currentDate;
 		String crime;
@@ -109,9 +112,6 @@ public class Simulador {
 		SimpleDateFormat format1=new SimpleDateFormat("yyyyMMddHHmm");
 		
 		
-		diaIni=delitos.firstKey();
-		
-
 		Date dt1=format1.parse(diaIni);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(dt1);
@@ -137,7 +137,7 @@ public class Simulador {
 				while(valuesSetIterator.hasNext()){
 					crime = valuesSetIterator.next();
 					producer.send(new ProducerRecord<String, String>("crimes", "CRIMES", crime));
-					System.out.print(".");
+					System.out.print("*");
 				}
 			}
 			
@@ -152,13 +152,19 @@ public class Simulador {
 	public static void main(String[] args) throws InterruptedException, ParseException, IOException {
 		Simulador sim = new Simulador();
 		
-		if(args.length==1) {
+		if(args.length>=1) {
 			sim.setiSleep(Integer.parseInt(args[0]));
 		}
 			
+		
 		sim.loadData();
 		sim.openKafka();
-		sim.run();
+		
+		if(args.length>=2) {
+			sim.run(args[1]);
+		} else {
+			sim.run();
+		}
 	}
 
 	

@@ -1,7 +1,9 @@
 package org.toletum.pfm;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Utils {
@@ -131,9 +133,30 @@ public class Utils {
 
 		return Num;
 	}
+	
+	public static String addHour(String now) {
+		SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		
+		Date dt;
+		try {
+			dt = format.parse(now);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(dt);
+			
+			calendar.add(Calendar.HOUR, 1);
+			
+			return format.format(calendar.getTime());
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "";
+		}
+		
+	}
 
 	public static void main(String[] args) throws Exception {
-		System.out.println("1234".substring(2, 4));
+		System.out.println(Utils.addHour("2015-01-05 23:30"));
 	}
 }
 
