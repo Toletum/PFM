@@ -16,6 +16,9 @@ public interface Config {
 	public static final String RedisFuture = "Future";
 	public static final String RedisFutureNext = "FutureNext";
 	
+	public static final String RedisLast50 = "Last50";
+	public static final String RedisSeconds60 = "Seconds60";
+	
 	public static final String DatabaseDriver = "org.neo4j.jdbc.Driver";
 	public static final String DatabaseServer = "jdbc:neo4j://database:7474/";
 }

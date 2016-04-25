@@ -7,6 +7,7 @@ import org.apache.flink.api.java.tuple.Tuple9;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer082;
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 
@@ -41,13 +42,25 @@ public class Streaming {
 		
 		SingleOutputStreamOperator<Tuple9<Integer, String, Integer, Integer, Integer, String, Integer, String, String>> Crimes = messageStream
 		.map(new CrimeMapStreaming())
-		.keyBy(4)
+		.keyBy(4) // Para particionar
 		.filter(new StreamingFilterFunction());
 		
 	    /*
 		Crimes.addSink(new SinkFunctionCrime()); // Posición GPS de delitos
 		Crimes.addSink(new SinkFunctionCrimeStadistics()); // Actualización
 		*/
+		
+		Crimes
+		.countWindowAll(50, 25)
+		.apply(new GroupByWindowCount())
+		.addSink(new SinkWindowsGroup(Config.RedisLast50));
+		
+		Crimes
+		.timeWindowAll(Time.seconds(60), Time.seconds(10))
+		.apply(new GroupByWindowTime())
+		.addSink(new SinkWindowsGroup(Config.RedisSeconds60));
+		
+		
 /*
 	    properties.put("topic", Config.KafkaTopicClock);
 		DataStream<String> messageStreamClock = this.env.addSource(new FlinkKafkaConsumer082<>(properties.getProperty("topic"), new SimpleStringSchema(), properties));
