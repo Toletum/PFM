@@ -16,7 +16,13 @@ extends RichSinkFunction<String> {
 	 * 
 	 */
 	private static final long serialVersionUID = 2859601213304525959L;
+	
+	private String key;
 
+	public SinkClockFunction(String key) {
+		this.key = key;
+	}
+	
 	@Override
 	public void close() throws IOException {
 		jedis.close();
@@ -29,6 +35,6 @@ extends RichSinkFunction<String> {
 	
 	@Override
 	public void invoke(String fechaHora) throws Exception {
-    	jedis.set(Config.RedisClock, fechaHora);
+    	jedis.set(key, fechaHora);
 	}
 }

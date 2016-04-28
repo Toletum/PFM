@@ -19,6 +19,10 @@ public interface Config {
 	public static final String RedisLast50 = "Last50";
 	public static final String RedisSeconds60 = "Seconds60";
 	
+	public static final String RedisAlarm = "Alarm";
+	public static final Integer RedisAlarmSize = new Integer(10);
+	
+	
 	public static final String DatabaseDriver = "org.neo4j.jdbc.Driver";
 	public static final String DatabaseServer = "jdbc:neo4j://database:7474/";
 }
