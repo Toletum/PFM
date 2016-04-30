@@ -1,15 +1,10 @@
 package org.toletum.pfm.streaming;
 
 import org.apache.flink.api.common.functions.MapFunction;
-import org.apache.flink.api.java.tuple.Tuple9;
 import org.toletum.pfm.Utils;
 
 public class CrimeMapStreaming 
-	  implements MapFunction<String, 
-	  Tuple9<Integer,String,Integer,Integer,
-	         Integer,String,Integer,
-	         String,String>
-      > {
+	  implements MapFunction<String, TupleCrimeStreaming> {
 
 		/**
 		 * 
@@ -19,14 +14,10 @@ public class CrimeMapStreaming
 		private int contador=0;
 
 		@Override
-		public 	  Tuple9<Integer,String,Integer,Integer,
-        Integer,String,Integer,
-        String,String> map(String value) throws Exception {
+		public TupleCrimeStreaming map(String value) throws Exception {
 			String []values = value.split(",");
 			
-			Tuple9<Integer,String,Integer,Integer,
-			Integer,String,Integer,
-			String,String> t;
+			TupleCrimeStreaming t;
 			
 			contador++;
 			
@@ -48,17 +39,13 @@ public class CrimeMapStreaming
 				Lat = Utils.clearNumber(values[9]);
 				Lng = Utils.clearNumber(values[10]);
 				
-				t = new Tuple9<Integer,String,Integer,Integer,
-						Integer,String,Integer,
-						String,String>(new Integer(contador), value, Mes, Minutes,
+				t = new TupleCrimeStreaming(new Integer(contador), value, Mes, Minutes,
 								       dayOfWeek, Barrio, Num,
 								       Lat, Lng);
 				
 			} catch(Exception ex) {
 				
-				t = new Tuple9<Integer, String,Integer,Integer,
-						Integer,String,Integer,
-						String,String>(new Integer(contador), value, new Integer(-1), new Integer(-1),
+				t = new TupleCrimeStreaming(new Integer(contador), value, new Integer(-1), new Integer(-1),
 									   new Integer(-1),"",new Integer(-1),
 								       "","");
 			}

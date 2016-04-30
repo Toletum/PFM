@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.apache.flink.api.java.tuple.Tuple9;
 import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
 import org.toletum.pfm.Config;
 import org.apache.flink.configuration.Configuration;
@@ -15,7 +14,7 @@ import org.apache.flink.configuration.Configuration;
 
 
 public class SinkFunctionCrimeStadistics 
-	extends RichSinkFunction<Tuple9<Integer,String, Integer, Integer, Integer, String, Integer, String, String>> {
+	extends RichSinkFunction<TupleCrimeStreaming> {
 	
 	private Connection con;
     
@@ -43,7 +42,7 @@ public class SinkFunctionCrimeStadistics
 	}
 
 	@Override
-	public void invoke(Tuple9<Integer,String, Integer, Integer, Integer, String, Integer, String, String> crime) throws Exception {
+	public void invoke(TupleCrimeStreaming crime) throws Exception {
 		System.out.print(crime.f2);
 		System.out.print(" - ");
 		System.out.print(crime.f3);

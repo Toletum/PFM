@@ -5,7 +5,6 @@ import org.apache.flink.api.java.DataSet;
 import org.apache.flink.api.java.ExecutionEnvironment;
 import org.apache.flink.api.java.operators.FilterOperator;
 import org.apache.flink.api.java.tuple.Tuple12;
-import org.apache.flink.api.java.tuple.Tuple5;
 
 public class Batch {
 	final String CSV = "hdfs://hadoop:9000/BDP_History/Victim_Based_Crime.csv";
@@ -17,7 +16,7 @@ public class Batch {
     String,String,String,
     String,String,String>> inputCSV;
 	
-	DataSet<Tuple5<Integer, Integer, Integer, String, Integer>> DataCrimes;
+	DataSet<TupleCrime> DataCrimes;
 	
 	public static void log(String info) {
 		System.out.println(info);
@@ -25,7 +24,7 @@ public class Batch {
 	
 	public void processCrime() throws Exception {
 		
-		FilterOperator<Tuple5<Integer, Integer, Integer, String, Integer>> DataCrimesF = this.DataCrimes
+		FilterOperator<TupleCrime> DataCrimesF = this.DataCrimes
         .filter(new FilterFunctionAdapter());
         
 		DataCrimesF.partitionByHash(0).distinct(0).output(new OutputFormatNode("meses.csv","Mes",0,0));

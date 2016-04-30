@@ -3,14 +3,13 @@ package org.toletum.pfm.batch;
 import java.io.IOException;
 
 import org.apache.flink.api.common.io.RichOutputFormat;
-import org.apache.flink.api.java.tuple.Tuple5;
 import org.apache.flink.configuration.Configuration;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
 public class OutputFormatMesesDias 
-extends RichOutputFormat<Tuple5<Integer, Integer, Integer, String, Integer>> {
+extends RichOutputFormat<TupleCrime> {
 
 	private String fileName;
 	
@@ -56,7 +55,7 @@ extends RichOutputFormat<Tuple5<Integer, Integer, Integer, String, Integer>> {
 	}
 
 	@Override
-	public void writeRecord(Tuple5<Integer, Integer, Integer, String, Integer> record) throws IOException {
+	public void writeRecord(TupleCrime record) throws IOException {
 		String f;
 		
 		f=record.f0.toString();

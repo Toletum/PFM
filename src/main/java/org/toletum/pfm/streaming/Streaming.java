@@ -2,7 +2,6 @@ package org.toletum.pfm.streaming;
 
 import java.util.Properties;
 
-import org.apache.flink.api.java.tuple.Tuple9;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -39,7 +38,7 @@ public class Streaming {
 
 		DataStream<String> messageStream = this.env.addSource(new FlinkKafkaConsumer082<>(properties.getProperty("topic"), new SimpleStringSchema(), properties));
 		
-		SingleOutputStreamOperator<Tuple9<Integer, String, Integer, Integer, Integer, String, Integer, String, String>> Crimes = messageStream
+		SingleOutputStreamOperator<TupleCrimeStreaming> Crimes = messageStream
 		.map(new CrimeMapStreaming())
 		.keyBy(5) // Para particionar
 		.filter(new StreamingFilterFunction());

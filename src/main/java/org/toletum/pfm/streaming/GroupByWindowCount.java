@@ -4,14 +4,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.api.java.tuple.Tuple9;
 import org.apache.flink.streaming.api.functions.windowing.RichAllWindowFunction;
 import org.apache.flink.streaming.api.windowing.windows.GlobalWindow;
 import org.apache.flink.util.Collector;
 
 public class GroupByWindowCount 
-		extends RichAllWindowFunction<
-					Tuple9<Integer, String, Integer, Integer, Integer, String, Integer, String, String>, 
+		extends RichAllWindowFunction<TupleCrimeStreaming, 
 					Iterator<Tuple2<String, Integer>>, GlobalWindow> {
 
 	/**
@@ -21,15 +19,15 @@ public class GroupByWindowCount
 
 	@Override
 	public void apply(GlobalWindow window,
-			Iterable<Tuple9<Integer, String, Integer, Integer, Integer, String, Integer, String, String>> input,
+			Iterable<TupleCrimeStreaming> input,
 			Collector<Iterator<Tuple2<String, Integer>>> out)
 					throws Exception {
 		
-		Iterator<Tuple9<Integer, String, Integer, Integer, Integer, String, Integer, String, String>> elems = input.iterator();
+		Iterator<TupleCrimeStreaming> elems = input.iterator();
 		
 		HashMap<String, Tuple2<String,Integer>> groupBy = new HashMap<>(); 
 		
-		Tuple9<Integer, String, Integer, Integer, Integer, String, Integer, String, String> ele;
+		TupleCrimeStreaming ele;
 		
         while(elems.hasNext()) {
         	ele = elems.next();

@@ -2,7 +2,6 @@ package org.toletum.pfm.streaming;
 
 import java.io.IOException;
 
-import org.apache.flink.api.java.tuple.Tuple9;
 import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
 import org.toletum.pfm.Config;
 import org.apache.flink.configuration.Configuration;
@@ -11,7 +10,7 @@ import org.apache.flink.configuration.Configuration;
 import redis.clients.jedis.Jedis;
 
 public class SinkFunctionCrime 
-	extends RichSinkFunction<Tuple9<Integer,String, Integer, Integer, Integer, String, Integer, String, String>> {
+	extends RichSinkFunction<TupleCrimeStreaming> {
 	
     private Jedis jedis;
     
@@ -30,7 +29,7 @@ public class SinkFunctionCrime
 	}
 	
 	@Override
-	public void invoke(Tuple9<Integer,String, Integer, Integer, Integer, String, Integer, String, String> crime) throws Exception {
+	public void invoke(TupleCrimeStreaming crime) throws Exception {
 		jedis.lpush(this.key, crime.f0+";"+crime.f7+";"+crime.f8+";"+crime.f5);
 		jedis.ltrim(this.key, 0, this.size);
 		

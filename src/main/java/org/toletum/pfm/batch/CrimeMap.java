@@ -2,21 +2,20 @@ package org.toletum.pfm.batch;
 
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.tuple.Tuple12;
-import org.apache.flink.api.java.tuple.Tuple5;
 import org.toletum.pfm.Utils;
 
 public class CrimeMap implements MapFunction<Tuple12<String,String,String,
 String,String,String,
 String,String,String,
 String,String,String>, 
-Tuple5<Integer, Integer, Integer, String, Integer>> {
+TupleCrime> {
  
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -283046145121773789L;
 	
-	public Tuple5<Integer, Integer, Integer, String, Integer> map(
+	public TupleCrime map(
 			Tuple12<String, String, String, String, String, String, String, String, String, String, String, String> arg0)
     {
 		Integer Mes;
@@ -31,7 +30,7 @@ Tuple5<Integer, Integer, Integer, String, Integer>> {
 		Barrio = arg0.f7;
 		Num = Utils.getNum(arg0.f11);
 		
-		return new Tuple5<Integer, Integer, Integer, String, Integer>(Mes, Minutes, dayOfWeek, Barrio, Num);
+		return new TupleCrime(Mes, Minutes, dayOfWeek, Barrio, Num);
 	}
 
 
