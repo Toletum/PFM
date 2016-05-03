@@ -13,6 +13,7 @@ import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
 import org.toletum.pfm.Config;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Transaction;
 
 public class SinkFuture 
 	extends RichSinkFunction<Tuple8<String, Integer, Integer, Integer,
@@ -25,6 +26,13 @@ public class SinkFuture
 	
 	private Connection con;
     private Jedis jedis;
+    private String key;
+    private String keyNext;
+    
+    public SinkFuture(String key, String keyNext) {
+    	this.key = key;
+    	this.keyNext = keyNext;
+    }
 	
 	private ResultSet getInfo(Integer mes, Integer dia, Integer hora) throws SQLException {
 		
@@ -39,7 +47,7 @@ public class SinkFuture
 
 	@Override
 	public void invoke(Tuple8<String, Integer, Integer, Integer,
-			String, Integer, Integer, Integer> record) {
+			String, Integer, Integer, Integer> record)  {
 		/*
 		System.out.print(record.f0);
 		System.out.print(" ");
@@ -52,31 +60,48 @@ public class SinkFuture
 		*/
 		
 		String dat;
+		Transaction trac;
+		
+		trac = jedis.multi();
 		
 		try {
 			
+			trac.del(this.key);
+			trac.del(this.keyNext);
+			
+			
 			ResultSet res = getInfo(record.f1, record.f2, record.f3);
 			
-			dat=record.f1+";"+record.f2+";"+record.f3+"|";
 			while(res.next()) {
-				dat+=res.getString("B.id")+";"+res.getInt("T.numero")+";"+res.getInt("T.media")+"|";
+				
+				dat=res.getString("B.id")+";"+res.getInt("T.numero")+";"+res.getInt("T.media");
+				
+				trac.lpush(this.key, dat);
 			}
-			jedis.set(Config.RedisFuture, dat); 
 			
 			dat=null;
 			res = null;
 			
 			res = getInfo(record.f5, record.f6, record.f7);
 			
-			dat=record.f5+";"+record.f6+";"+record.f7+"|";
 			while(res.next()) {
-				dat+=res.getString("B.id")+";"+res.getInt("T.numero")+";"+res.getInt("T.media")+"|";
+				dat=res.getString("B.id")+";"+res.getInt("T.numero")+";"+res.getInt("T.media");
+				
+				trac.lpush(this.keyNext, dat);
 			}
-			jedis.set(Config.RedisFutureNext, dat); 
 			
 			dat=null;
 			res = null;
+			
+			trac.exec();
 		} catch(SQLException e) {
+			trac.discard();
+			e.printStackTrace();
+		}
+		
+		try {
+			trac.close();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

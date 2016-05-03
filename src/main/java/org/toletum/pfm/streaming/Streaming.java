@@ -70,7 +70,7 @@ public class Streaming {
 		
 		messageStreamClock
 		.map(new ClockMap())
-		.addSink(new SinkFuture());
+		.addSink(new SinkFuture(Config.RedisFuture, Config.RedisFutureNext));
 	}
 
 	public static void main(String[] args) throws Exception {

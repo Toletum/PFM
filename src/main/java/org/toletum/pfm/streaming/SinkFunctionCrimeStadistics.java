@@ -43,6 +43,7 @@ public class SinkFunctionCrimeStadistics
 
 	@Override
 	public void invoke(TupleCrimeStreaming crime) throws Exception {
+		/*
 		System.out.print(crime.f2);
 		System.out.print(" - ");
 		System.out.print(crime.f3);
@@ -52,7 +53,7 @@ public class SinkFunctionCrimeStadistics
 		System.out.print(crime.f5);
 		System.out.print(" - ");
 		System.out.print(crime.f6);
-		System.out.println();
+		System.out.println();*/
 
 
 		try {
