@@ -2,6 +2,7 @@ package org.toletum.pfm.streaming;
 
 
 import java.io.IOException;
+import java.util.Date;
 
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.configuration.Configuration;
@@ -11,7 +12,7 @@ import org.toletum.pfm.Config;
 import redis.clients.jedis.Jedis;
 
 public class SinkAlarmWindow 
-	extends RichSinkFunction<Tuple2<String, Long>>{
+	extends RichSinkFunction<Tuple2<String, Date>>{
 
     /**
 	 * 
@@ -29,7 +30,7 @@ public class SinkAlarmWindow
 	}
     
 	@Override
-	public void invoke(Tuple2<String, Long> record) throws Exception {
+	public void invoke(Tuple2<String, Date> record) throws Exception {
 		System.out.println(record.f0+";"+record.f1);
 
 		jedis.lpush(this.key, record.f0+";"+record.f1);

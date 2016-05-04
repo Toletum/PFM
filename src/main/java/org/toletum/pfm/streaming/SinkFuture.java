@@ -36,7 +36,7 @@ public class SinkFuture
 	
 	private ResultSet getInfo(Integer mes, Integer dia, Integer hora) throws SQLException {
 		
-		PreparedStatement stmt = con.prepareStatement("MATCH (M: Mes {id: {1}})-[MD]->(D: Dia {id: {2}})-[T {hora: {3}}]->(B: Barrio) RETURN B.id, T.numero, T.media ORDER BY T.numero DESC");
+		PreparedStatement stmt = con.prepareStatement("MATCH (M: Mes {id: {1}})-[MD]->(D: Dia {id: {2}})-[T {hora: {3}}]->(B: Barrio) RETURN B.id, T.numero, T.media ORDER BY T.numero");
 		
 		stmt.setInt(1, mes);
 		stmt.setInt(2, dia);
@@ -72,6 +72,7 @@ public class SinkFuture
 			
 			ResultSet res = getInfo(record.f1, record.f2, record.f3);
 			
+			
 			while(res.next()) {
 				
 				dat=res.getString("B.id")+";"+res.getInt("T.numero")+";"+res.getInt("T.media");
@@ -79,16 +80,21 @@ public class SinkFuture
 				trac.lpush(this.key, dat);
 			}
 			
+			trac.lpush(this.key, record.f1+";"+record.f2+";"+record.f3);
+			
 			dat=null;
 			res = null;
 			
 			res = getInfo(record.f5, record.f6, record.f7);
+			
 			
 			while(res.next()) {
 				dat=res.getString("B.id")+";"+res.getInt("T.numero")+";"+res.getInt("T.media");
 				
 				trac.lpush(this.keyNext, dat);
 			}
+			
+			trac.lpush(this.keyNext, record.f5+";"+record.f6+";"+record.f7);
 			
 			dat=null;
 			res = null;

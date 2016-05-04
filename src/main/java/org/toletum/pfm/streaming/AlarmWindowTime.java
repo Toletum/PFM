@@ -1,5 +1,7 @@
 package org.toletum.pfm.streaming;
 
+import java.util.Date;
+
 import org.apache.flink.api.java.tuple.Tuple;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.configuration.Configuration;
@@ -10,7 +12,7 @@ import org.apache.flink.util.Collector;
 public class AlarmWindowTime 
 	extends 
 	RichWindowFunction<TupleCrimeStreaming,
-	Tuple2<String, Long>,Tuple,TimeWindow> {
+	Tuple2<String, Date>,Tuple,TimeWindow> {
 
 	/**
 	 * 
@@ -20,13 +22,13 @@ public class AlarmWindowTime
 	@Override
 	public void apply(Tuple key, TimeWindow window,
 			Iterable<TupleCrimeStreaming> input,
-			Collector<Tuple2<String, Long>> out) throws Exception {
+			Collector<Tuple2<String, Date>> out) throws Exception {
 		
 		TupleCrimeStreaming ele;
 		
 		ele = input.iterator().next();
    		
-		out.collect(new Tuple2<String, Long>(ele.f5, new Long(System.currentTimeMillis())));
+		out.collect(new Tuple2<String, Date>(ele.f5, new Date()));
 	}
 	
 	@Override

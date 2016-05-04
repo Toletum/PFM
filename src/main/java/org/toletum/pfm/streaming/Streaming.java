@@ -47,12 +47,12 @@ public class Streaming {
 		Crimes.addSink(new SinkFunctionCrimeStadistics()); // Actualización
 
 		Crimes
-		.countWindowAll(50, 25)
+		.countWindowAll(50, 5)
 		.apply(new GroupByWindowCount())
 		.addSink(new SinkWindowsGroup(Config.RedisLast50));
 		
 		Crimes
-		.timeWindowAll(Time.seconds(60), Time.seconds(10))
+		.timeWindowAll(Time.seconds(60), Time.seconds(5))
 		.apply(new GroupByWindowTime())
 		.addSink(new SinkWindowsGroup(Config.RedisSeconds60));
 
