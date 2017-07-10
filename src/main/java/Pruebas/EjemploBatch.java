@@ -3,10 +3,10 @@ package Pruebas;
 import java.io.IOException;
 
 import org.apache.flink.api.common.io.RichOutputFormat;
-import org.apache.flink.api.common.operators.Order;
+//import org.apache.flink.api.common.operators.Order;
 import org.apache.flink.api.java.DataSet;
 import org.apache.flink.api.java.ExecutionEnvironment;
-import org.apache.flink.api.java.tuple.Tuple2;
+//import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.configuration.Configuration;
 
 
